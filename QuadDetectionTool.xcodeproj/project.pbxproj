@@ -1,0 +1,364 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F4A1351F20F3730300AA004D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1351E20F3730300AA004D /* AppDelegate.swift */; };
+		F4A1352120F3730300AA004D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1352020F3730300AA004D /* ViewController.swift */; };
+		F4A1352420F3730400AA004D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352220F3730400AA004D /* Main.storyboard */; };
+		F4A1352720F3730400AA004D /* QuadDetectionTool.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4A1352520F3730400AA004D /* QuadDetectionTool.xcdatamodeld */; };
+		F4A1352920F3730600AA004D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352820F3730600AA004D /* Assets.xcassets */; };
+		F4A1352C20F3730600AA004D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352A20F3730600AA004D /* LaunchScreen.storyboard */; };
+		F4A1353820F39BF700AA004D /* SupportFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1353720F39BF600AA004D /* SupportFunc.swift */; };
+		F4A1355A20F4F13400AA004D /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1355920F4F13400AA004D /* BezierView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F4A1351B20F3730300AA004D /* QuadDetectionTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuadDetectionTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4A1351E20F3730300AA004D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F4A1352020F3730300AA004D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F4A1352320F3730400AA004D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F4A1352620F3730400AA004D /* QuadDetectionTool.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuadDetectionTool.xcdatamodel; sourceTree = "<group>"; };
+		F4A1352820F3730600AA004D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F4A1352B20F3730600AA004D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4A1352D20F3730600AA004D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4A1353720F39BF600AA004D /* SupportFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFunc.swift; sourceTree = "<group>"; };
+		F4A1355920F4F13400AA004D /* BezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4A1351820F3730300AA004D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4A1351220F3730300AA004D = {
+			isa = PBXGroup;
+			children = (
+				F4A1351D20F3730300AA004D /* QuadDetectionTool */,
+				F4A1351C20F3730300AA004D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4A1351C20F3730300AA004D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1351B20F3730300AA004D /* QuadDetectionTool.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4A1351D20F3730300AA004D /* QuadDetectionTool */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1351E20F3730300AA004D /* AppDelegate.swift */,
+				F4A1352020F3730300AA004D /* ViewController.swift */,
+				F4A1353720F39BF600AA004D /* SupportFunc.swift */,
+				F4A1355920F4F13400AA004D /* BezierView.swift */,
+				F4A1352220F3730400AA004D /* Main.storyboard */,
+				F4A1352820F3730600AA004D /* Assets.xcassets */,
+				F4A1352A20F3730600AA004D /* LaunchScreen.storyboard */,
+				F4A1352D20F3730600AA004D /* Info.plist */,
+				F4A1352520F3730400AA004D /* QuadDetectionTool.xcdatamodeld */,
+			);
+			path = QuadDetectionTool;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4A1351A20F3730300AA004D /* QuadDetectionTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4A1353020F3730600AA004D /* Build configuration list for PBXNativeTarget "QuadDetectionTool" */;
+			buildPhases = (
+				F4A1351720F3730300AA004D /* Sources */,
+				F4A1351820F3730300AA004D /* Frameworks */,
+				F4A1351920F3730300AA004D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuadDetectionTool;
+			productName = QuadDetectionTool;
+			productReference = F4A1351B20F3730300AA004D /* QuadDetectionTool.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4A1351320F3730300AA004D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Stanislav Astakhov";
+				TargetAttributes = {
+					F4A1351A20F3730300AA004D = {
+						CreatedOnToolsVersion = 9.4;
+					};
+				};
+			};
+			buildConfigurationList = F4A1351620F3730300AA004D /* Build configuration list for PBXProject "QuadDetectionTool" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F4A1351220F3730300AA004D;
+			productRefGroup = F4A1351C20F3730300AA004D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4A1351A20F3730300AA004D /* QuadDetectionTool */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4A1351920F3730300AA004D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4A1352C20F3730600AA004D /* LaunchScreen.storyboard in Resources */,
+				F4A1352920F3730600AA004D /* Assets.xcassets in Resources */,
+				F4A1352420F3730400AA004D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4A1351720F3730300AA004D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4A1352120F3730300AA004D /* ViewController.swift in Sources */,
+				F4A1355A20F4F13400AA004D /* BezierView.swift in Sources */,
+				F4A1352720F3730400AA004D /* QuadDetectionTool.xcdatamodeld in Sources */,
+				F4A1351F20F3730300AA004D /* AppDelegate.swift in Sources */,
+				F4A1353820F39BF700AA004D /* SupportFunc.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F4A1352220F3730400AA004D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4A1352320F3730400AA004D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F4A1352A20F3730600AA004D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4A1352B20F3730600AA004D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4A1352E20F3730600AA004D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F4A1352F20F3730600AA004D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4A1353120F3730600AA004D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4KPM9QEPHS;
+				INFOPLIST_FILE = QuadDetectionTool/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = klin4est.QuadDetectionTool;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4A1353220F3730600AA004D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4KPM9QEPHS;
+				INFOPLIST_FILE = QuadDetectionTool/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = klin4est.QuadDetectionTool;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4A1351620F3730300AA004D /* Build configuration list for PBXProject "QuadDetectionTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4A1352E20F3730600AA004D /* Debug */,
+				F4A1352F20F3730600AA004D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4A1353020F3730600AA004D /* Build configuration list for PBXNativeTarget "QuadDetectionTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4A1353120F3730600AA004D /* Debug */,
+				F4A1353220F3730600AA004D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F4A1352520F3730400AA004D /* QuadDetectionTool.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F4A1352620F3730400AA004D /* QuadDetectionTool.xcdatamodel */,
+			);
+			currentVersion = F4A1352620F3730400AA004D /* QuadDetectionTool.xcdatamodel */;
+			path = QuadDetectionTool.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F4A1351320F3730300AA004D /* Project object */;
+}
