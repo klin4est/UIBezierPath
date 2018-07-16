@@ -8,6 +8,8 @@
 
 import UIKit
 
+typealias SideTuppleArr = [(point: CGPoint, pointArr: [Int])]
+
 class BezierView: UIView {
 
     //MARK: Private Properties
@@ -31,10 +33,12 @@ class BezierView: UIView {
 
                 vertexArrayCoord[index] = currentPoint
             }
-
+            sidePointArrayCoord = returnSideArray(pointArray: vertexArrayCoord)
             setNeedsDisplay()
         }
     }
+
+    var sidePointArrayCoord = SideTuppleArr()
 
     //MARK: Lifecycle
 
@@ -62,12 +66,15 @@ class BezierView: UIView {
                                 CGPoint(x: width, y: height),
                                 CGPoint(x: correction, y: height)]
         }
+
+        sidePointArrayCoord = returnSideArray(pointArray: vertexArrayCoord)
+        addDragSideDots(from: sidePointArrayCoord)
     }
 
-    private func drawFigure(from vertexArray: [CGPoint], in rect: CGRect) {
+    private func drawFigure(from pointArray: [CGPoint], in rect: CGRect) {
 
-        for point in vertexArray {
-            if point == vertexArray.first {
+        for point in pointArray {
+            if point == pointArray.first {
                 currentBezier.move(to: point)
             } else {
                 currentBezier.addLine(to: point)
@@ -88,6 +95,11 @@ class BezierView: UIView {
         }
     }
 
+    private func addDragSideDots(from pointArray: SideTuppleArr) {
+        for point in pointArray {
+            drawDot(at: point.0)
+        }
+    }
     private func drawDot(at center: CGPoint) {
         let path = UIBezierPath()
         path.addArc(withCenter: center,
@@ -99,6 +111,29 @@ class BezierView: UIView {
 
         UIColor.blue.setFill()
         path.fill()
+    }
+
+    private func returnSideArray(pointArray: [CGPoint]) -> SideTuppleArr {
+        if pointArray.count == 4 {
+            var supportArray = [Int]()
+            var newArray = SideTuppleArr()
+
+            for i in 0..<pointArray.count {
+                supportArray.append(i)
+            }
+            supportArray.append(0)
+
+            for point in supportArray {
+                let valuePoint = supportArray[point]
+                let nextValuePoint = supportArray[point+1]
+                let x = (pointArray[valuePoint].x + pointArray[nextValuePoint].x) / 2
+                let y = (pointArray[valuePoint].y + pointArray[nextValuePoint].y) / 2
+                
+                newArray.append((CGPoint(x: x, y: y), [valuePoint, nextValuePoint]))
+            }
+            return newArray
+        }
+        return []
     }
 
 }
