@@ -114,4 +114,40 @@ class SupportFunc {
 
         return (minX, maxX, minY, maxY)
     }
+
+    static func moveAndReturnPoint(at bezierView: BezierView, to newPosition: CGPoint, indexPoint: Int) -> CGPoint? {
+        var bezierPoint: CGPoint
+        var copyArray = bezierView.vertexArrayCoord
+
+        copyArray[indexPoint] = newPosition
+        let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
+                                                                line2: (a: copyArray[1], b: copyArray[3]))
+        let startPointIndex = SupportFunc.returnStartPointIndex(index: indexPoint)
+        let startPoint = copyArray[startPointIndex]
+
+        if intersectPoint != CGPoint.zero {
+            bezierView.vertexArrayCoord[indexPoint] = newPosition
+            bezierPoint = newPosition
+
+            return bezierPoint
+        } else {
+            //need vector
+            let vectorPoint = SupportFunc.intersectByVector(startPoint: startPoint,
+                                                            currentPoint: newPosition)
+            if vectorPoint != CGPoint.zero {
+                copyArray[indexPoint] = vectorPoint
+
+                let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
+                                                                        line2: (a: copyArray[1], b: copyArray[3]))
+                if intersectPoint != CGPoint.zero {
+
+                    bezierView.vertexArrayCoord[indexPoint] = intersectPoint
+                    bezierPoint = newPosition
+
+                    return bezierPoint
+                }
+            }
+        }
+        return nil
+    }
 }

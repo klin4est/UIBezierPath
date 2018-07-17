@@ -131,33 +131,7 @@ class ViewController: UIViewController {
 
             //point alhorithm
             if let indexPoint = indexBezierPoint  {
-                var copyArray = bezierView.vertexArrayCoord
-
-                copyArray[indexPoint] = newPosition
-                let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
-                                                                        line2: (a: copyArray[1], b: copyArray[3]))
-                let startPointIndex = SupportFunc.returnStartPointIndex(index: indexPoint)
-                let startPoint = copyArray[startPointIndex]
-
-                if intersectPoint != CGPoint.zero {
-                    bezierView.vertexArrayCoord[indexPoint] = newPosition
-                    bezierPoint = newPosition
-                } else {
-                    //need vector
-                    let vectorPoint = SupportFunc.intersectByVector(startPoint: startPoint,
-                                                                    currentPoint: newPosition)
-                    if vectorPoint != CGPoint.zero {
-                        copyArray[indexPoint] = vectorPoint
-
-                        let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
-                                                                                line2: (a: copyArray[1], b: copyArray[3]))
-                        if intersectPoint != CGPoint.zero {
-
-                            bezierView.vertexArrayCoord[indexPoint] = intersectPoint
-                            bezierPoint = newPosition
-                        }
-                    }
-                }
+                bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
             }
 
             //side alhorithm
@@ -166,24 +140,29 @@ class ViewController: UIViewController {
                 var copySideArray = bezierView.sidePointArrayCoord
                 let sideTupple = copySideArray[indexPoint]
                 let arrVertexPoint = sideTupple.pointArr
+
+                var currentX: CGFloat = 0.0
+                var currentY: CGFloat = 0.0
+
                 if indexPoint % 2 == 0 {
-
                     for index in arrVertexPoint {
-
                         let deltaY = newPosition.y - sideTupple.point.y
-                        print("newPosition \(newPosition) ")
-                        print("deltaY \(deltaY)")
-                        let currentX = copyArray[index].x
-                        let currentY = copyArray[index].y + deltaY
-                        bezierView.vertexArrayCoord[index] = CGPoint(x: currentX, y: currentY)
+                        currentX = copyArray[index].x
+                        currentY = copyArray[index].y + deltaY
+
+                        let newPosition = CGPoint(x: currentX, y: currentY)
+
+                        bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: index)
                     }
                 } else {
                     for index in arrVertexPoint {
                         let deltaX = newPosition.x - sideTupple.point.x
-                        print("deltaX \(deltaX)")
-                        let currentX = copyArray[index].x + deltaX
-                        let currentY = copyArray[index].y
-                        bezierView.vertexArrayCoord[index] = CGPoint(x: currentX, y: currentY)
+                        currentX = copyArray[index].x + deltaX
+                        currentY = copyArray[index].y
+
+                        let newPosition = CGPoint(x: currentX, y: currentY)
+
+                        bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: index)
                     }
                 }
             }
@@ -191,6 +170,8 @@ class ViewController: UIViewController {
         case .ended:
             bezierPoint = nil
             indexBezierPoint = nil
+            bezierSidePoint = nil
+            indexBezierSidePoint = nil
         default:
             break
         }
