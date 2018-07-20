@@ -10,9 +10,13 @@ import UIKit
 
 class SupportFunc {
 
+    //MARK: Initializer
+    
+    private init() {}
+
     //MARK: Common Methods
 
-    static func returnReduced(_ sideSize: CGFloat, at indent: Double) -> Double {
+    static func reduceValue(_ sideSize: CGFloat, at indent: Double) -> Double {
         let answer = Double(sideSize) - 2 * indent
         return answer
     }
@@ -115,9 +119,9 @@ class SupportFunc {
         return (minX, maxX, minY, maxY)
     }
 
-    static func moveAndReturnPoint(at bezierView: BezierView, to newPosition: CGPoint, indexPoint: Int) -> CGPoint? {
-        var bezierPoint: CGPoint
-        var copyArray = bezierView.vertexArrayCoord
+    static func movePoint(at bezierView: BezierView, to newPosition: CGPoint, indexPoint: Int) -> CGPoint? {
+        var bezierPoint: CGPoint? = nil
+        var copyArray = bezierView.returnPolygon()
 
         copyArray[indexPoint] = newPosition
         let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
@@ -126,10 +130,8 @@ class SupportFunc {
         let startPoint = copyArray[startPointIndex]
 
         if intersectPoint != CGPoint.zero {
-            bezierView.vertexArrayCoord[indexPoint] = newPosition
+            bezierView.changePointInPolygon(index: indexPoint, point: newPosition)
             bezierPoint = newPosition
-
-            return bezierPoint
         } else {
             //need vector
             let vectorPoint = SupportFunc.intersectByVector(startPoint: startPoint,
@@ -140,14 +142,75 @@ class SupportFunc {
                 let intersectPoint = SupportFunc.getIntersectionOfLines(line1: (a: copyArray[0], b: copyArray[2]),
                                                                         line2: (a: copyArray[1], b: copyArray[3]))
                 if intersectPoint != CGPoint.zero {
-
-                    bezierView.vertexArrayCoord[indexPoint] = intersectPoint
+                    bezierView.changePointInPolygon(index: indexPoint, point: intersectPoint)
                     bezierPoint = newPosition
-
-                    return bezierPoint
                 }
             }
         }
-        return nil
+        return bezierPoint
+    }
+
+    static func moveSide(at bezierView: BezierView, to newPosition: CGPoint, indexPoint: Int) -> CGPoint? {
+        var copyArray = bezierView.returnPolygon()
+        var copySideArray = bezierView.sidePointArrayCoord
+        let sideTupple = copySideArray[indexPoint]
+        let arrVertexPoint = sideTupple.pointArr
+        var currentPoint: CGPoint? = nil
+        var currentX: CGFloat = 0.0
+        var currentY: CGFloat = 0.0
+
+        if indexPoint % 2 == 0 {
+            for index in arrVertexPoint {
+                let deltaY = newPosition.y - sideTupple.point.y
+                currentX = copyArray[index].x
+                currentY = copyArray[index].y + deltaY
+
+                let newPosition = CGPoint(x: currentX, y: currentY)
+
+                currentPoint = SupportFunc.movePoint(at: bezierView, to: newPosition, indexPoint: index)
+            }
+        } else {
+            for index in arrVertexPoint {
+                let deltaX = newPosition.x - sideTupple.point.x
+                currentX = copyArray[index].x + deltaX
+                currentY = copyArray[index].y
+
+                let newPosition = CGPoint(x: currentX, y: currentY)
+
+                currentPoint = SupportFunc.movePoint(at: bezierView, to: newPosition, indexPoint: index)
+            }
+        }
+        return currentPoint
+    }
+
+    static func makeFrame(frame: CGRect ,indentWidth: Double, indentHeight: Double) -> CGRect {
+        let newWidth = SupportFunc.reduceValue(frame.width, at: indentWidth)
+        let newHeight = SupportFunc.reduceValue(frame.height, at: indentHeight)
+
+        return CGRect(x: indentWidth, y: indentHeight, width: newWidth, height: newHeight)
+    }
+
+    static func makeBezierView(frame: CGRect) -> BezierView {
+        let bezierView = BezierView(frame: frame)
+        bezierView.backgroundColor = .clear
+        bezierView.contentMode = .redraw
+
+        return bezierView
+    }
+
+    static func makeView(frame: CGRect, indentWidth : Double, indentHeight : Double) -> UIView {
+
+        let offsetValue = Double(SupportFunc.returnRadius())
+        let newWidth = SupportFunc.reduceValue(frame.width, at: offsetValue)
+        let newHeight = SupportFunc.reduceValue(frame.height, at: offsetValue)
+
+        let newFrame = CGRect(x: indentWidth + offsetValue,
+                               y: indentHeight + offsetValue,
+                               width: newWidth,
+                               height: newHeight)
+        let newView = UIView(frame: newFrame)
+        newView.backgroundColor = .yellow
+
+        return newView
     }
 }

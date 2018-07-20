@@ -10,7 +10,7 @@ import UIKit
 
 typealias SideTuppleArr = [(point: CGPoint, pointArr: [Int])]
 
-class BezierView: UIView {
+final class BezierView: UIView {
 
     //MARK: Private Properties
 
@@ -22,7 +22,7 @@ class BezierView: UIView {
 
     //MARK: Public Properties
 
-    var vertexArrayCoord = [CGPoint]() {
+    private var vertexArrayCoord = [CGPoint]() {
         didSet {
             let changedIndexes = zip(vertexArrayCoord, oldValue).map{$0 != $1}.enumerated().filter{$1}.map{$0.0}
 
@@ -49,6 +49,16 @@ class BezierView: UIView {
         drawFigure(from: vertexArrayCoord, in: rect)
         configureBezier()
         addDragDots(from: vertexArrayCoord)
+    }
+
+    //MARK: Public Methods
+
+    func changePointInPolygon(index: Int, point: CGPoint) {
+        vertexArrayCoord[index] = point
+    }
+
+    func returnPolygon() -> [CGPoint] {
+        return vertexArrayCoord
     }
 
     //MARK: Private Methods

@@ -8,11 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     //MARK: Private Properties
 
-    var bezierViewOrigin: CGPoint!
     var bezierPoint: CGPoint?
     var indexBezierPoint: Int?
     var bezierSidePoint: CGPoint?
@@ -28,57 +27,24 @@ class ViewController: UIViewController {
     }
 
     private func setupUI() {
+        let currentView = self.view!
         var heightNavBar = 0.0
         if let height = navigationController?.navigationBar.bounds.height {
             heightNavBar = Double(height)
         }
-        
-        let currHeight = view.bounds.height
-        let currWidth = view.bounds.width
-
         let indentWidth = 20.0 // magic indent
         let indentHeight = 2.5 * indentWidth + heightNavBar // magic indent
-        let newWidth = SupportFunc.returnReduced(currWidth, at: indentWidth)
-        let newHeight = SupportFunc.returnReduced(currHeight, at: indentHeight)
 
-        let currFrame = CGRect(x: indentWidth,
-                               y: indentHeight,
-                               width: newWidth,
-                               height: newHeight)
+        let currentFrame = currentView.bounds
+        let secondFrame = SupportFunc.makeFrame(frame: currentFrame, indentWidth: indentWidth, indentHeight: indentHeight)
+        let bezierView = SupportFunc.makeBezierView(frame: secondFrame)
+        let photoView = SupportFunc.makeView(frame: secondFrame, indentWidth: indentWidth, indentHeight: indentHeight)
 
-        let bezierView = BezierView(frame: currFrame)
-        let photoView = returnSubViewWithPhoto(bezierView,
-                                               width: newWidth,
-                                               height: newHeight,
-                                               indentWidth: indentWidth,
-                                               indentHeight: indentHeight)
-        bezierView.backgroundColor = .clear
-        photoView.backgroundColor = .yellow
-        bezierViewOrigin = bezierView.frame.origin
-        view.addSubview(photoView)
-        view.addSubview(bezierView)
-        view.backgroundColor = .gray
-
-        bezierView.contentMode = .redraw
+        currentView.addSubview(photoView)
+        currentView.addSubview(bezierView)
+        currentView.backgroundColor = .gray
 
         addPanGesture(view: bezierView)
-    }
-
-    private func returnSubViewWithPhoto(_ baseView : UIView,
-                                        width : Double,
-                                        height : Double,
-                                        indentWidth : Double,
-                                        indentHeight : Double) -> UIView {
-
-        let offsetValue = Double(SupportFunc.returnRadius())
-        let currFrame = CGRect(x: indentWidth + offsetValue,
-                               y: indentHeight + offsetValue,
-                               width: SupportFunc.returnReduced(CGFloat(width), at: offsetValue),
-                               height: SupportFunc.returnReduced(CGFloat(height), at: offsetValue))
-
-        let newView = UIView(frame: currFrame)
-
-        return newView
     }
 
     private func addPanGesture(view: UIView) {
@@ -95,91 +61,69 @@ class ViewController: UIViewController {
         case .began:
 
             let position = sender.location(in: senderView)
+            setStartValueForPoints()
+
             //catch drag dot
-            let tuplePoint = returnIntersectPoint(currentPoint: position, in: bezierView.vertexArrayCoord)
-            bezierPoint = nil
-            indexBezierPoint = nil
-            bezierSidePoint = nil
-            indexBezierSidePoint = nil
-
-            if let catchPoint = tuplePoint.point,
-                let indexPoint = tuplePoint.index {
-
-                bezierPoint = catchPoint
-                indexBezierPoint = indexPoint
-            }
-
-            if bezierPoint == nil {
-                arraySidePoint = []
-                for side in bezierView.sidePointArrayCoord {
-                    arraySidePoint += [side.0]
-                }
-
-                let tupleSidePoint = returnIntersectPoint(currentPoint: position, in: arraySidePoint)
-
-                if let catchPoint = tupleSidePoint.point,
-                    let indexPoint = tupleSidePoint.index {
-
-                    bezierSidePoint = catchPoint
-                    indexBezierSidePoint = indexPoint
-                }
-
-            }
+            catchDragDot(position: position, bezierView: bezierView)
 
         case .changed:
             let newPosition =  sender.location(in: senderView)
 
             //point alhorithm
             if let indexPoint = indexBezierPoint  {
-                bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
+                self.bezierPoint = SupportFunc.movePoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
             }
 
             //side alhorithm
             if let indexPoint = indexBezierSidePoint {
-                var copyArray = bezierView.vertexArrayCoord
-                var copySideArray = bezierView.sidePointArrayCoord
-                let sideTupple = copySideArray[indexPoint]
-                let arrVertexPoint = sideTupple.pointArr
-
-                var currentX: CGFloat = 0.0
-                var currentY: CGFloat = 0.0
-
-                if indexPoint % 2 == 0 {
-                    for index in arrVertexPoint {
-                        let deltaY = newPosition.y - sideTupple.point.y
-                        currentX = copyArray[index].x
-                        currentY = copyArray[index].y + deltaY
-
-                        let newPosition = CGPoint(x: currentX, y: currentY)
-
-                        bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: index)
-                    }
-                } else {
-                    for index in arrVertexPoint {
-                        let deltaX = newPosition.x - sideTupple.point.x
-                        currentX = copyArray[index].x + deltaX
-                        currentY = copyArray[index].y
-
-                        let newPosition = CGPoint(x: currentX, y: currentY)
-
-                        bezierPoint = SupportFunc.moveAndReturnPoint(at: bezierView, to: newPosition, indexPoint: index)
-                    }
-                }
+                self.bezierPoint = SupportFunc.moveSide(at: bezierView, to: newPosition, indexPoint: indexPoint)
             }
 
         case .ended:
-            bezierPoint = nil
-            indexBezierPoint = nil
-            bezierSidePoint = nil
-            indexBezierSidePoint = nil
+            setStartValueForPoints()
         default:
             break
         }
     }
 
+    private func setStartValueForPoints() {
+        self.bezierPoint = nil
+        self.indexBezierPoint = nil
+        self.bezierSidePoint = nil
+        self.indexBezierSidePoint = nil
+    }
+
+    private func catchDragDot(position: CGPoint, bezierView: BezierView) {
+        let tuplePoint = returnIntersectPoint(currentPoint: position, in: bezierView.returnPolygon())
+
+        if let catchPoint = tuplePoint.point,
+            let indexPoint = tuplePoint.index {
+
+            self.bezierPoint = catchPoint
+            self.indexBezierPoint = indexPoint
+        }
+
+        if self.bezierPoint == nil {
+            self.arraySidePoint = []
+            for side in bezierView.sidePointArrayCoord {
+                self.arraySidePoint += [side.0]
+            }
+
+            let tupleSidePoint = returnIntersectPoint(currentPoint: position, in: arraySidePoint)
+
+            if let catchPoint = tupleSidePoint.point,
+                let indexPoint = tupleSidePoint.index {
+
+                self.bezierSidePoint = catchPoint
+                self.indexBezierSidePoint = indexPoint
+            }
+
+        }
+    }
+
     private func returnIntersectPoint(currentPoint: CGPoint, in arrayCGPoint: [CGPoint]) -> (point: CGPoint?, index: Int?) {
-        //if we touch closer or equal 3 radii
-        let maxDistance = 3 * SupportFunc.returnRadius()
+        //if we touch closer or equal 5 radii
+        let maxDistance = 5 * SupportFunc.returnRadius()
 
         for (index, point) in arrayCGPoint.enumerated() {
             let currentDistance = SupportFunc.returnDistance(currentPoint, point)
