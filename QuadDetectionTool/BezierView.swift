@@ -14,106 +14,93 @@ final class BezierView: UIView {
 
     //MARK: Private Properties
 
-    private var currentBezier: UIBezierPath!
+    private var path: UIBezierPath!
     private var width = 0.0
     private var height = 0.0
-    private let dotRadius: CGFloat = SupportFunc.returnRadius()
-    private let lineWidth: CGFloat = SupportFunc.returnWidthLine()
-
-    //MARK: Public Properties
-
-    private var vertexArrayCoord = [CGPoint]() {
+    private let dotRadius = CGFloat(Constants.dotRadius)
+    private let lineWidth = CGFloat(Constants.lineWidth)
+    private var sideDraggers = SideTuppleArr()
+    private var draggers = [CGPoint]() {
         didSet {
-            let changedIndexes = zip(vertexArrayCoord, oldValue).map{$0 != $1}.enumerated().filter{$1}.map{$0.0}
+            let changedIndexes = zip(draggers, oldValue).map{$0 != $1}.enumerated().filter{$1}.map{$0.0}
 
             for index in changedIndexes {
-                let currentPoint = SupportFunc.returnNormPoint(point: vertexArrayCoord[index],
-                                                               rad: dotRadius,
-                                                               frame: frame)
+                let position = draggers[index].getCorrectPosition(in: frame)
 
-                vertexArrayCoord[index] = currentPoint
+                changeVertexInPolygon(index: index, vertex: position)
             }
-            sidePointArrayCoord = returnSideArray(pointArray: vertexArrayCoord)
+            self.sideDraggers = getSideArray(pointArray: draggers)
             setNeedsDisplay()
         }
     }
 
-    var sidePointArrayCoord = SideTuppleArr()
-
     //MARK: Lifecycle
 
     override func draw(_ rect: CGRect)  {
-        currentBezier = UIBezierPath()
+        self.path = UIBezierPath()
 
         setuplayout()
-        drawFigure(from: vertexArrayCoord, in: rect)
-        configureBezier()
-        addDragDots(from: vertexArrayCoord)
+        drawPath(with: self.draggers)
+        addDragDots(from: self.draggers)
+        addDragSideDots(from: self.sideDraggers)
     }
 
     //MARK: Public Methods
 
-    func changePointInPolygon(index: Int, point: CGPoint) {
-        vertexArrayCoord[index] = point
+    func changeVertexInPolygon(index: Int, vertex: CGPoint) {
+        self.draggers[index] = vertex
     }
 
-    func returnPolygon() -> [CGPoint] {
-        return vertexArrayCoord
+    func getPolygon() -> [CGPoint] {
+        return self.draggers
     }
 
+    func getSidePolygon() -> SideTuppleArr {
+        return self.sideDraggers
+    }
     //MARK: Private Methods
 
     private func setuplayout() {
-        let correction = Double(dotRadius)
+        let correction = Constants.dotRadius
 
-        width = Double(frame.width) - correction
-        height = Double(frame.height) - correction
+        self.width = Double(frame.width) - correction
+        self.height = Double(frame.height) - correction
 
-        if vertexArrayCoord.isEmpty {
+        if self.draggers.isEmpty {
 
-            vertexArrayCoord = [CGPoint(x: correction, y: correction),
-                                CGPoint(x: width, y: correction),
-                                CGPoint(x: width, y: height),
-                                CGPoint(x: correction, y: height)]
+            self.draggers = [CGPoint(x: correction, y: correction),
+                                CGPoint(x: self.width, y: correction),
+                                CGPoint(x: self.width, y: self.height),
+                                CGPoint(x: correction, y: self.height)]
         }
 
-        sidePointArrayCoord = returnSideArray(pointArray: vertexArrayCoord)
-        addDragSideDots(from: sidePointArrayCoord)
+        self.sideDraggers = getSideArray(pointArray: self.draggers)
+
     }
 
-    private func drawFigure(from pointArray: [CGPoint], in rect: CGRect) {
-
-        for point in pointArray {
-            if point == pointArray.first {
-                currentBezier.move(to: point)
-            } else {
-                currentBezier.addLine(to: point)
-            }
-        }
-        currentBezier.close()
-    }
-    
-    private func configureBezier() {
-        currentBezier.lineWidth = lineWidth
-        UIColor.blue.setStroke()
-        currentBezier.stroke()
-    }
-
-    private func addDragDots(from pointArray: [CGPoint]) {
-        for point in pointArray {
-            drawDot(at: point)
+    private func drawPath(with vertexes: [CGPoint]) {
+        if vertexes.count > 0 {
+            self.path.move(to: vertexes.first!)
+            vertexes.forEach{self.path.addLine(to: $0)}
+            self.path.close()
+            self.path.lineWidth = self.lineWidth
+            UIColor.blue.setStroke()
+            self.path.stroke()
         }
     }
 
-    private func addDragSideDots(from pointArray: SideTuppleArr) {
-        for point in pointArray {
-            drawDot(at: point.0)
-        }
+
+    private func addDragDots(from vertexes: [CGPoint]) {
+        vertexes.forEach{drawDot(at: $0)}
+    }
+
+    private func addDragSideDots(from sideDots: SideTuppleArr) {
+        sideDots.forEach{drawDot(at: $0.point)}
     }
     private func drawDot(at center: CGPoint) {
         let path = UIBezierPath()
         path.addArc(withCenter: center,
-                    radius: dotRadius,
+                    radius: self.dotRadius,
                     startAngle: 0,
                     endAngle: 2 * CGFloat.pi,
                     clockwise: true)
@@ -123,10 +110,10 @@ final class BezierView: UIView {
         path.fill()
     }
 
-    private func returnSideArray(pointArray: [CGPoint]) -> SideTuppleArr {
+    private func getSideArray(pointArray: [CGPoint]) -> SideTuppleArr {
         if pointArray.count == 4 {
             var supportArray = [Int]()
-            var newArray = SideTuppleArr()
+            var sidesWithDotIndex = SideTuppleArr()
 
             for i in 0..<pointArray.count {
                 supportArray.append(i)
@@ -134,14 +121,16 @@ final class BezierView: UIView {
             supportArray.append(0)
 
             for point in supportArray {
-                let valuePoint = supportArray[point]
-                let nextValuePoint = supportArray[point+1]
-                let x = (pointArray[valuePoint].x + pointArray[nextValuePoint].x) / 2
-                let y = (pointArray[valuePoint].y + pointArray[nextValuePoint].y) / 2
-                
-                newArray.append((CGPoint(x: x, y: y), [valuePoint, nextValuePoint]))
+
+                let startIndex = supportArray[point]
+                let nextIndex = supportArray[point+1]
+
+                let position = pointArray[startIndex]
+                let nextPosition = pointArray[nextIndex]
+                let sideDragger = position.getMiddle(to: nextPosition)
+                sidesWithDotIndex.append((sideDragger, [startIndex, nextIndex]))
             }
-            return newArray
+            return sidesWithDotIndex
         }
         return []
     }

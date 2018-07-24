@@ -7,17 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F47C96F6210716A000E56FED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C96F52107169F00E56FED /* Constants.swift */; };
+		F47C96F82107491700E56FED /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C96F72107491700E56FED /* Extensions.swift */; };
 		F4A1351F20F3730300AA004D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1351E20F3730300AA004D /* AppDelegate.swift */; };
 		F4A1352120F3730300AA004D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1352020F3730300AA004D /* ViewController.swift */; };
 		F4A1352420F3730400AA004D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352220F3730400AA004D /* Main.storyboard */; };
 		F4A1352720F3730400AA004D /* QuadDetectionTool.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4A1352520F3730400AA004D /* QuadDetectionTool.xcdatamodeld */; };
 		F4A1352920F3730600AA004D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352820F3730600AA004D /* Assets.xcassets */; };
 		F4A1352C20F3730600AA004D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4A1352A20F3730600AA004D /* LaunchScreen.storyboard */; };
-		F4A1353820F39BF700AA004D /* SupportFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1353720F39BF600AA004D /* SupportFunc.swift */; };
+		F4A1353820F39BF700AA004D /* CalculateMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1353720F39BF600AA004D /* CalculateMethods.swift */; };
 		F4A1355A20F4F13400AA004D /* BezierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A1355920F4F13400AA004D /* BezierView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F47C96F52107169F00E56FED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F47C96F72107491700E56FED /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F4A1351B20F3730300AA004D /* QuadDetectionTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuadDetectionTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4A1351E20F3730300AA004D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4A1352020F3730300AA004D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,7 +30,7 @@
 		F4A1352820F3730600AA004D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4A1352B20F3730600AA004D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4A1352D20F3730600AA004D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4A1353720F39BF600AA004D /* SupportFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFunc.swift; sourceTree = "<group>"; };
+		F4A1353720F39BF600AA004D /* CalculateMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateMethods.swift; sourceTree = "<group>"; };
 		F4A1355920F4F13400AA004D /* BezierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,8 +65,10 @@
 			isa = PBXGroup;
 			children = (
 				F4A1351E20F3730300AA004D /* AppDelegate.swift */,
+				F47C96F72107491700E56FED /* Extensions.swift */,
+				F47C96F52107169F00E56FED /* Constants.swift */,
 				F4A1352020F3730300AA004D /* ViewController.swift */,
-				F4A1353720F39BF600AA004D /* SupportFunc.swift */,
+				F4A1353720F39BF600AA004D /* CalculateMethods.swift */,
 				F4A1355920F4F13400AA004D /* BezierView.swift */,
 				F4A1352220F3730400AA004D /* Main.storyboard */,
 				F4A1352820F3730600AA004D /* Assets.xcassets */,
@@ -148,7 +154,9 @@
 				F4A1355A20F4F13400AA004D /* BezierView.swift in Sources */,
 				F4A1352720F3730400AA004D /* QuadDetectionTool.xcdatamodeld in Sources */,
 				F4A1351F20F3730300AA004D /* AppDelegate.swift in Sources */,
-				F4A1353820F39BF700AA004D /* SupportFunc.swift in Sources */,
+				F4A1353820F39BF700AA004D /* CalculateMethods.swift in Sources */,
+				F47C96F6210716A000E56FED /* Constants.swift in Sources */,
+				F47C96F82107491700E56FED /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

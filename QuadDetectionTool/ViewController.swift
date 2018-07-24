@@ -27,18 +27,15 @@ final class ViewController: UIViewController {
     }
 
     private func setupUI() {
-        let currentView = self.view!
-        var heightNavBar = 0.0
-        if let height = navigationController?.navigationBar.bounds.height {
-            heightNavBar = Double(height)
-        }
+        guard let currentView = self.view else { return }
+
         let indentWidth = 20.0 // magic indent
-        let indentHeight = 2.5 * indentWidth + heightNavBar // magic indent
+        let indentHeight = 20.0 // magic indent
 
         let currentFrame = currentView.bounds
-        let secondFrame = SupportFunc.makeFrame(frame: currentFrame, indentWidth: indentWidth, indentHeight: indentHeight)
-        let bezierView = SupportFunc.makeBezierView(frame: secondFrame)
-        let photoView = SupportFunc.makeView(frame: secondFrame, indentWidth: indentWidth, indentHeight: indentHeight)
+        let secondFrame = currentFrame.reduce(indentWidth: indentWidth, indentHeight: indentHeight)
+        let bezierView = CalculateMethods.makeBezierView(frame: secondFrame)
+        let photoView = CalculateMethods.makeView(frame: secondFrame, indentWidth: indentWidth, indentHeight: indentHeight)
 
         currentView.addSubview(photoView)
         currentView.addSubview(bezierView)
@@ -54,35 +51,32 @@ final class ViewController: UIViewController {
     }
 
     @objc private func handlePan(sender: UIPanGestureRecognizer) {
-        let senderView = sender.view
-        let bezierView = senderView as! BezierView
+        guard let bezierView = sender.view as? BezierView else { return }
 
         switch sender.state {
         case .began:
 
-            let position = sender.location(in: senderView)
+            let position = sender.location(in: bezierView)
             setStartValueForPoints()
 
             //catch drag dot
-            catchDragDot(position: position, bezierView: bezierView)
+            catchDragDot(position: position, on: bezierView)
 
         case .changed:
-            let newPosition =  sender.location(in: senderView)
+            let newPosition =  sender.location(in: bezierView)
 
             //point alhorithm
             if let indexPoint = indexBezierPoint  {
-                self.bezierPoint = SupportFunc.movePoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
+                self.bezierPoint = CalculateMethods.movePoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
             }
 
             //side alhorithm
             if let indexPoint = indexBezierSidePoint {
-                self.bezierPoint = SupportFunc.moveSide(at: bezierView, to: newPosition, indexPoint: indexPoint)
+                self.bezierPoint = CalculateMethods.moveSide(at: bezierView, to: newPosition, indexPoint: indexPoint)
             }
 
-        case .ended:
-            setStartValueForPoints()
         default:
-            break
+            setStartValueForPoints()
         }
     }
 
@@ -93,8 +87,8 @@ final class ViewController: UIViewController {
         self.indexBezierSidePoint = nil
     }
 
-    private func catchDragDot(position: CGPoint, bezierView: BezierView) {
-        let tuplePoint = returnIntersectPoint(currentPoint: position, in: bezierView.returnPolygon())
+    private func catchDragDot(position: CGPoint, on view: BezierView) {
+        let tuplePoint = getIntersect(currentPoint: position, in: view.getPolygon())
 
         if let catchPoint = tuplePoint.point,
             let indexPoint = tuplePoint.index {
@@ -105,11 +99,11 @@ final class ViewController: UIViewController {
 
         if self.bezierPoint == nil {
             self.arraySidePoint = []
-            for side in bezierView.sidePointArrayCoord {
+            for side in view.getSidePolygon() {
                 self.arraySidePoint += [side.0]
             }
 
-            let tupleSidePoint = returnIntersectPoint(currentPoint: position, in: arraySidePoint)
+            let tupleSidePoint = getIntersect(currentPoint: position, in: arraySidePoint)
 
             if let catchPoint = tupleSidePoint.point,
                 let indexPoint = tupleSidePoint.index {
@@ -121,12 +115,12 @@ final class ViewController: UIViewController {
         }
     }
 
-    private func returnIntersectPoint(currentPoint: CGPoint, in arrayCGPoint: [CGPoint]) -> (point: CGPoint?, index: Int?) {
+    private func getIntersect(currentPoint: CGPoint, in arrayCGPoint: [CGPoint]) -> (point: CGPoint?, index: Int?) {
         //if we touch closer or equal 5 radii
-        let maxDistance = 5 * SupportFunc.returnRadius()
+        let maxDistance = CGFloat(5 * Constants.dotRadius)
 
         for (index, point) in arrayCGPoint.enumerated() {
-            let currentDistance = SupportFunc.returnDistance(currentPoint, point)
+            let currentDistance = CalculateMethods.getDistance(line: (currentPoint, point))
 
             if currentDistance <= maxDistance {
                 return (point , index)
