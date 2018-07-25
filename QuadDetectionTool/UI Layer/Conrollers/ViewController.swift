@@ -14,8 +14,8 @@ final class ViewController: UIViewController {
 
     var vertex: CGPoint?
     var vertexIndex: Int?
-    var bezierSidePoint: CGPoint?
-    var indexBezierSidePoint: Int?
+    var sideDragger: CGPoint?
+    var sideDraggerIndex: Int?
     var draggers = [CGPoint]()
 
     //MARK: Lifecycle
@@ -60,12 +60,12 @@ final class ViewController: UIViewController {
             let newPosition =  sender.location(in: bezierView)
 
             //point alhorithm
-            if let index = vertexIndex  {
+            if let index = self.vertexIndex  {
                 self.vertex = CalculateMethods.changeValue(vertexDragger: newPosition, at: index, in: bezierView)
             }
 
             //side alhorithm
-            if let index = indexBezierSidePoint {
+            if let index = self.sideDraggerIndex {
                 self.vertex = CalculateMethods.changeValue(sideDragger: newPosition, at: index, in: bezierView)
             }
 
@@ -77,8 +77,8 @@ final class ViewController: UIViewController {
     private func setStartValues() {
         self.vertex = nil
         self.vertexIndex = nil
-        self.bezierSidePoint = nil
-        self.indexBezierSidePoint = nil
+        self.sideDragger = nil
+        self.sideDraggerIndex = nil
     }
 
     private func catchDragDot(with position: CGPoint, in view: BezierView) {
@@ -102,8 +102,8 @@ final class ViewController: UIViewController {
             if let catchPoint = tupleSidePoint.point,
                 let indexPoint = tupleSidePoint.index {
 
-                self.bezierSidePoint = catchPoint
-                self.indexBezierSidePoint = indexPoint
+                self.sideDragger = catchPoint
+                self.sideDraggerIndex = indexPoint
             }
 
         }

@@ -47,6 +47,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F47C96FB2109254C00E56FED /* UI Layer */ = {
+			isa = PBXGroup;
+			children = (
+				F47C96FC210925F400E56FED /* Conrollers */,
+			);
+			path = "UI Layer";
+			sourceTree = "<group>";
+		};
+		F47C96FC210925F400E56FED /* Conrollers */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1352020F3730300AA004D /* ViewController.swift */,
+			);
+			path = Conrollers;
+			sourceTree = "<group>";
+		};
+		F47C96FD2109261F00E56FED /* Support files */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1353720F39BF600AA004D /* CalculateMethods.swift */,
+				F47C96F921090A8400E56FED /* CreatingMethods.swift */,
+			);
+			path = "Support files";
+			sourceTree = "<group>";
+		};
+		F47C96FE2109263E00E56FED /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1355920F4F13400AA004D /* BezierView.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		F47C96FF2109264C00E56FED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F47C96F72107491700E56FED /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F47C9701210928A000E56FED /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				F47C96F52107169F00E56FED /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		F4A1351220F3730300AA004D = {
 			isa = PBXGroup;
 			children = (
@@ -67,12 +116,11 @@
 			isa = PBXGroup;
 			children = (
 				F4A1351E20F3730300AA004D /* AppDelegate.swift */,
-				F47C96F72107491700E56FED /* Extensions.swift */,
-				F47C96F52107169F00E56FED /* Constants.swift */,
-				F4A1352020F3730300AA004D /* ViewController.swift */,
-				F4A1353720F39BF600AA004D /* CalculateMethods.swift */,
-				F47C96F921090A8400E56FED /* CreatingMethods.swift */,
-				F4A1355920F4F13400AA004D /* BezierView.swift */,
+				F47C9701210928A000E56FED /* Constants */,
+				F47C96FF2109264C00E56FED /* Extensions */,
+				F47C96FD2109261F00E56FED /* Support files */,
+				F47C96FE2109263E00E56FED /* View Models */,
+				F47C96FB2109254C00E56FED /* UI Layer */,
 				F4A1352220F3730400AA004D /* Main.storyboard */,
 				F4A1352820F3730600AA004D /* Assets.xcassets */,
 				F4A1352A20F3730600AA004D /* LaunchScreen.storyboard */,
