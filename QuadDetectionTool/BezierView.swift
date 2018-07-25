@@ -27,7 +27,7 @@ final class BezierView: UIView {
             for index in changedIndexes {
                 let position = draggers[index].getCorrectPosition(in: frame)
 
-                changeVertexInPolygon(index: index, vertex: position)
+                changePolygonDraggers(to: position, by: index)
             }
             self.sideDraggers = getSideArray(pointArray: draggers)
             setNeedsDisplay()
@@ -47,7 +47,7 @@ final class BezierView: UIView {
 
     //MARK: Public Methods
 
-    func changeVertexInPolygon(index: Int, vertex: CGPoint) {
+    func changePolygonDraggers(to vertex: CGPoint, by index: Int) {
         self.draggers[index] = vertex
     }
 

@@ -31,16 +31,18 @@ extension CGPoint {
 }
 
 extension CGRect {
-    public func reduce(indentWidth: Double, indentHeight: Double, offsetValue: Double = 0.0) -> CGRect {
-
+    public func reduce(offsetValue: Double = 0.0) -> CGRect {
+        let indentWidth = Constants.decreasingWidth
+        let indentHeight = Constants.decreasingHeight
+        
         if offsetValue == 0.0 {
-            let newWidth = CalculateMethods.reduceValue(self.width, at: indentWidth)
-            let newHeight = CalculateMethods.reduceValue(self.height, at: indentHeight)
+            let newWidth = CalculateMethods.reduceValue(self.width, by: indentWidth)
+            let newHeight = CalculateMethods.reduceValue(self.height, by: indentHeight)
 
             return CGRect(x: indentWidth, y: indentHeight, width: newWidth, height: newHeight)
         } else {
-            let newWidth = CalculateMethods.reduceValue(self.width, at: offsetValue)
-            let newHeight = CalculateMethods.reduceValue(self.height, at: offsetValue)
+            let newWidth = CalculateMethods.reduceValue(self.width, by: offsetValue)
+            let newHeight = CalculateMethods.reduceValue(self.height, by: offsetValue)
 
             return CGRect(x: indentWidth + offsetValue, y: indentHeight + offsetValue, width: newWidth, height: newHeight)
         }

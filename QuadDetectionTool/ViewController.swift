@@ -12,11 +12,11 @@ final class ViewController: UIViewController {
 
     //MARK: Private Properties
 
-    var bezierPoint: CGPoint?
-    var indexBezierPoint: Int?
+    var vertex: CGPoint?
+    var vertexIndex: Int?
     var bezierSidePoint: CGPoint?
     var indexBezierSidePoint: Int?
-    var arraySidePoint = [CGPoint]()
+    var draggers = [CGPoint]()
 
     //MARK: Lifecycle
 
@@ -27,19 +27,13 @@ final class ViewController: UIViewController {
     }
 
     private func setupUI() {
-        guard let currentView = self.view else { return }
+        let mainFrame = self.view.frame
+        let bezierView = CreatingMethods.makeBezierView(frame: mainFrame)
+        let photoView = CreatingMethods.makeView(frame: mainFrame.reduce())
 
-        let indentWidth = 20.0 // magic indent
-        let indentHeight = 20.0 // magic indent
-
-        let currentFrame = currentView.bounds
-        let secondFrame = currentFrame.reduce(indentWidth: indentWidth, indentHeight: indentHeight)
-        let bezierView = CalculateMethods.makeBezierView(frame: secondFrame)
-        let photoView = CalculateMethods.makeView(frame: secondFrame, indentWidth: indentWidth, indentHeight: indentHeight)
-
-        currentView.addSubview(photoView)
-        currentView.addSubview(bezierView)
-        currentView.backgroundColor = .gray
+        self.view.addSubview(photoView)
+        self.view.addSubview(bezierView)
+        self.view.backgroundColor = .gray
 
         addPanGesture(view: bezierView)
     }
@@ -57,53 +51,53 @@ final class ViewController: UIViewController {
         case .began:
 
             let position = sender.location(in: bezierView)
-            setStartValueForPoints()
+            setStartValues()
 
             //catch drag dot
-            catchDragDot(position: position, on: bezierView)
+            catchDragDot(with: position, in: bezierView)
 
         case .changed:
             let newPosition =  sender.location(in: bezierView)
 
             //point alhorithm
-            if let indexPoint = indexBezierPoint  {
-                self.bezierPoint = CalculateMethods.movePoint(at: bezierView, to: newPosition, indexPoint: indexPoint)
+            if let index = vertexIndex  {
+                self.vertex = CalculateMethods.changeValue(vertexDragger: newPosition, at: index, in: bezierView)
             }
 
             //side alhorithm
-            if let indexPoint = indexBezierSidePoint {
-                self.bezierPoint = CalculateMethods.moveSide(at: bezierView, to: newPosition, indexPoint: indexPoint)
+            if let index = indexBezierSidePoint {
+                self.vertex = CalculateMethods.changeValue(sideDragger: newPosition, at: index, in: bezierView)
             }
 
         default:
-            setStartValueForPoints()
+            setStartValues()
         }
     }
 
-    private func setStartValueForPoints() {
-        self.bezierPoint = nil
-        self.indexBezierPoint = nil
+    private func setStartValues() {
+        self.vertex = nil
+        self.vertexIndex = nil
         self.bezierSidePoint = nil
         self.indexBezierSidePoint = nil
     }
 
-    private func catchDragDot(position: CGPoint, on view: BezierView) {
-        let tuplePoint = getIntersect(currentPoint: position, in: view.getPolygon())
+    private func catchDragDot(with position: CGPoint, in view: BezierView) {
+        let tuplePoint = checkCathedDragger(near: position, in: view.getPolygon())
 
         if let catchPoint = tuplePoint.point,
             let indexPoint = tuplePoint.index {
 
-            self.bezierPoint = catchPoint
-            self.indexBezierPoint = indexPoint
+            self.vertex = catchPoint
+            self.vertexIndex = indexPoint
         }
 
-        if self.bezierPoint == nil {
-            self.arraySidePoint = []
+        if self.vertex == nil {
+            self.draggers = []
             for side in view.getSidePolygon() {
-                self.arraySidePoint += [side.0]
+                self.draggers += [side.0]
             }
 
-            let tupleSidePoint = getIntersect(currentPoint: position, in: arraySidePoint)
+            let tupleSidePoint = checkCathedDragger(near: position, in: self.draggers)
 
             if let catchPoint = tupleSidePoint.point,
                 let indexPoint = tupleSidePoint.index {
@@ -115,12 +109,12 @@ final class ViewController: UIViewController {
         }
     }
 
-    private func getIntersect(currentPoint: CGPoint, in arrayCGPoint: [CGPoint]) -> (point: CGPoint?, index: Int?) {
+    private func checkCathedDragger(near currentPoint: CGPoint, in draggers: [CGPoint]) -> (point: CGPoint?, index: Int?) {
         //if we touch closer or equal 5 radii
         let maxDistance = CGFloat(5 * Constants.dotRadius)
 
-        for (index, point) in arrayCGPoint.enumerated() {
-            let currentDistance = CalculateMethods.getDistance(line: (currentPoint, point))
+        for (index, point) in draggers.enumerated() {
+            let currentDistance = CalculateMethods.getDistance(segment: (currentPoint, point))
 
             if currentDistance <= maxDistance {
                 return (point , index)
